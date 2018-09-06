@@ -1,2 +1,12 @@
 https://tradingeconomics.com
 https://www.alphavantage.co
+
+############################
+for example:
+https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=MSFT&apikey=0LYQQSYMZAYEZLJP
+
+https://api.tradingeconomics.com/markets/search/united%20states?c=guest:guest
+
+https://api.tradingeconomics.com/markets/search/bezq?c=guest:guest
+
+https://api.tradingeconomics.com/markets/historical/bezq:it?c=guest:guest&d1=2018-08-05
