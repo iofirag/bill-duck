@@ -1,4 +1,4 @@
-export type Commodity_alphavantage = {
+export type Res_alphavantage = {
     'Meta Data'?: MetaData_alphavantage,
     'Time Series (Daily)'?: { [date: string]: TimeSeriesDaily_alphavantage } //'2018-01-31': TimeSeriesDaily
     'Information'?: any

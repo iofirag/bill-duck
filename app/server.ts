@@ -1,10 +1,10 @@
 import express from 'express';
 import fetch from 'node-fetch';
 // import {WelcomeController} from './controllers';
-import { Commodity_alphavantage } from './types';
 import { setTimeout } from 'timers';
 import { Stock } from './classes/Stock';
 import { ApiKey, TICKERS_SP500, ApiFunction } from './static';
+import { Res_alphavantage } from './types';
 
 const app: express.Application = express();
 // app.use('/welcome', WelcomeController);
@@ -15,12 +15,12 @@ const app: express.Application = express();
 
 
 
-const fetchStock = async (_url: string): Promise<Commodity_alphavantage> => {
+const fetchStock = async (_url: string): Promise<Res_alphavantage> => {
     let res = await fetch(_url);
-    const json: Commodity_alphavantage = await res.json();
+    const json: Res_alphavantage = await res.json();
     return json;
 }
-const buildCommodityUrl = (apikey: string, apiFunction: string, stockSymbol: string) => {
+const buildFetchUrl = (apikey: string, apiFunction: string, stockSymbol: string) => {
     return `https://www.alphavantage.co/query?apikey=${apikey}&function=${apiFunction}&outputsize=full&symbol=${stockSymbol}`
 }
 
@@ -41,11 +41,11 @@ const tryFetchData = () => {
     if (stockList.length) {
         const tickerSymbol: string = stockList[stockList.length-1];
         apiKey = getNextApiKey();
-        const url = buildCommodityUrl(apiKey, ApiFunction, tickerSymbol);
+        const url = buildFetchUrl(apiKey, ApiFunction, tickerSymbol);
         console.log(`-------------------------`)
         console.log(`Try fetch ${tickerSymbol} (${stockList.indexOf(tickerSymbol) + 1 })`);
         fetchStock(url)
-            .then((stock_al: Commodity_alphavantage) => {
+            .then((stock_al: Res_alphavantage) => {
 
             // console.log(Object.keys(com))
             let isSuccess: boolean = false;
