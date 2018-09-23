@@ -9,11 +9,10 @@ function hack(numOfKeys) {
     if(apiKeysArr.length < numOfKeys) {
         var form = document.getElementById('post-form');
         form.first.value = 'a';
-        form.first.value = "a"
-        form.last.value = "a"
-        form.occupation.value = "Investor"
-        form.organization.value = `d${Date.now()-327863728166}ff`
-        form.email.value = `${Date.now()}@gmail.com`
+        form.last.value = "a";
+        form.occupation.value = "Investor";
+        form.organization.value = `d${Date.now()-327863728166}ff`;
+        form.email.value = `${Date.now()}@gmail.com`;
     //     var rep = document.getElementsByClassName('g-recaptcha')[0];
     //     rep.parentElement.removeChild(rep);
         document.getElementById('submit-btn').disabled = false;
