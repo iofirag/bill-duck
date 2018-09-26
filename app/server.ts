@@ -5,6 +5,7 @@ import { setTimeout } from 'timers';
 import { Stock } from './classes/Stock';
 import { ApiKey, TICKERS_SP500, ApiFunction } from './static';
 import { Res_alphavantage } from './types';
+import { MongoConfig } from './config/mongo.config';
 
 const app: express.Application = express();
 // app.use('/welcome', WelcomeController);
@@ -13,7 +14,8 @@ const app: express.Application = express();
 // const https = require("https");
 // const apikey: string = ApiKey[0];
 
-
+// Config the mongoDB (local or online)
+new MongoConfig(false);
 
 const fetchStock = async (_url: string): Promise<Res_alphavantage> => {
     let res = await fetch(_url);
@@ -30,8 +32,10 @@ let errTimes = 0;
 let apiKey: string;
 
 const getNextApiKey = (lastKey?: string) => {
-    if (!lastKey) { return ApiKey[0];
-     }
+    if (!lastKey) { 
+        return ApiKey[0];
+    }
+
     const i = ApiKey.indexOf(lastKey);
     if (i >= 0 && i < ApiKey.length - 1)
     return ApiKey[i + 1]
