@@ -42,22 +42,12 @@ function hack(numOfKeys) {
     }
 }
 
-// document.getElementsByTagName('iframe')[0].scrollIntoView()
-// setTimeout(() => { document.getElementById('submit-btn').click() }, 5000)
-const VERS1 = 'Vantage! Your API key is: ';
-const VERS2 = 'Vantage! Your dedicated access key is: ';
-const VERS3 = 'It seems that you are already a registered user. As a reminder, your API key is: ';
-const VERS4 = 'Welcome to Alpha Vantage! Here is your API key: '
-
-Storage.prototype.setObj = function (key, obj) {
-    return this.setItem(key, JSON.stringify(obj))
-}
-Storage.prototype.getObj = function (key) {
-    return JSON.parse(this.getItem(key))
-}
-const exportKey = (msg, vers) => {
-    let apiKeyIndex = msg.indexOf(vers) + vers.length;
-    return msg.slice(apiKeyIndex, apiKeyIndex + 16);
+/* ##################################################### */
+const exportKey = (msg) => {
+    msg = msg.split(':')[1];
+    msg = msg.split('.')[0];
+    var apiCode = msg.split(' ')[1];
+    return apiCode;
 }
 const generateNewApiKey = () => {
     var form = document.getElementById('post-form');
@@ -76,30 +66,20 @@ const generateNewApiKey = () => {
     //print to console
     setTimeout(() => {
         var msg = String(document.getElementById('talk').firstChild.firstChild.innerHTML);
-        // console.log(msg)
-        var key;
-        if (msg.indexOf(VERS1) > -1) {
-            key = exportKey(msg, VERS1);
-            // console.log(msg.slice(43, 59));
-        } else if (msg.indexOf(VERS2) > -1) {
-            key = exportKey(msg, VERS2);
-            // console.log( msg.slice(56, 72) );
-        } else if (msg.indexOf(VERS3) > -1) {
-            // console.log(exportKey(msg, VERS3));
-            key = exportKey(msg, VERS3); 
-        } else if (msg.indexOf(VERS4) > -1) {
-            // console.log(exportKey(msg, VERS3));
-            key = exportKey(msg, VERS4);
-        }
+        var key = exportKey(msg);
         if (key) {
             var keyList = localStorage.getObj('keyList') || [];
             keyList.push(key);
-            localStorage.setObj('keyList', keyList);
+            localStorage.setItem('keyList', JSON.stringify(keyList));
         }
         generateNewApiKey()
-    }, 2000);
+    }, 20000);
 }
 generateNewApiKey()
+
+/* export saved data */
+JSON.parse(localStorage.getItem('keyList'))
+localStorage.keyList = [];
 
 
 
@@ -112,42 +92,3 @@ generateNewApiKey()
 // console.log(fullDate);
 
                 // console.log(`Success - ${tickerSymbol} - ${stock_al['Time Series (Daily)'][quoteList[0]]['1. open']}`);
-
-
-
-// const https = require("https");
-// const apikey: string = ApiKey[0];
-
-
-// type my = {
-//     s?: {
-//         df?: {
-//             age?: number 
-//         }
-//     }
-// }
-
-// var b: my = {
-
-// }
-// var c: my = {
-//     s: {
-//         df: {}
-//     }
-// }
-// var a: my = {
-//     s: {
-//         df: {
-//             age: 44
-//         }
-//     }
-// }
-// if (a && a.s && a.s.df && a.s.df.age) {
-//     console.log (a.s.df.age)
-// }
-
-// console.log(a && a.s && a.s.df && a.s.df.age)
-
-// var val = _.get(a, 's.df.age', 0);
-// console.log(val)
-// console.log(`Success - ${tickerSymbol} - ${stock_al['Time Series (Daily)'][quoteList[0]]['1. open']}`);
