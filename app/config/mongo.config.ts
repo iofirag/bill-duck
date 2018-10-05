@@ -9,7 +9,7 @@ export class MongoConfig {
     constructor(isLocal?: boolean) {
         try {
             if(isLocal) {
-                MongoClient.connect(`mongodb://localhost:${this.port}`, (err, db) => {
+                MongoClient.connect(`mongodb://localhost:${this.port}`, { useNewUrlParser: true }, (err, db) => {
                     err ? console.error('mongoDB ex:', err) : console.log('connected successfuly to local mongoDB');
     
                     this.dbObject = db.db();
