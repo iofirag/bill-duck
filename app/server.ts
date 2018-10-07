@@ -121,8 +121,36 @@ fetch(TaseUrl, {
         jsonData(body);
     });
 
-const jsonData = (csvText: string) => {
+const jsonData = async (csvStr: string) => {
     // TBD
+    /** csv file
+        a,b,c
+        1,2,3
+        4,5,6
+        */
+    // const csvFilePath = '<path to csv file>'
+    // csvtojson()
+    //     .fromString(csvStr)
+    //     // .fromFile(csvFilePath)
+    //     .then((jsonObj) => {
+    //         console.log(jsonObj);
+    //         /**
+    //          * [
+    //          * 	{a:"1", b:"2", c:"3"},
+    //          * 	{a:"4", b:"5". c:"6"}
+    //          * ]
+    //          */
+    //     })
+
+    // Async / await usage
+    // const jsonArray = await csv().fromFile(csvFilePath);
+    const jsonArray = await csvtojson({
+        noheader: false,
+        headers: ['name','symbol','ISIN','index','lastPrice','changePrecent','volume','lastTrade']
+    }).fromString(csvStr);
+    jsonArray.shift()   // Remove name: 'As of  07/10/2018 10:01'
+    jsonArray.shift()   // Remove headers
+    console.log(jsonArray)
 }
 
 

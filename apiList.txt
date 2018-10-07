@@ -5,11 +5,10 @@ https://eodhistoricaldata.com
 **********************************
 for example:
 https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=MSFT&apikey=0LYQQSYMZAYEZLJP
+https://www.alphavantage.co/query?function=SMA&symbol=TEVA&interval=daily&time_period=4&series_type=volumeeeeee&apikey=0LYQQSYMZAYEZLJP
 
 https://api.tradingeconomics.com/markets/search/united%20states?c=guest:guest
-
 https://api.tradingeconomics.com/markets/search/bezq?c=guest:guest
-
 https://api.tradingeconomics.com/markets/historical/bezq:it?c=guest:guest&d1=2018-08-05
 
 https://eodhistoricaldata.com/api/eod/googl.us?&api_token=5bb5d1e3026af4.09780977&period=d&fmt=json
