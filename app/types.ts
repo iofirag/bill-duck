@@ -1,8 +1,17 @@
+export type Res_eodhistoricaldata = {
+    date: string,   // "1980-12-12",
+    open: string,   // "28.7500",
+    high: string,   // "28.8700",
+    low: string,    // "28.7500",
+    close: string,  // "28.7500",
+    adjusted_close: string, // "0.4164",
+    volume: string, // "117258517.00"
+};
 export type Res_alphavantage = {
     'Meta Data'?: any,
     'Time Series (Daily)'?: { [date: string]: any } //'2018-01-31': TimeSeriesDaily
     'Information'?: any
-}
+};
 // export type MetaData_alphavantage = {
 //     '1. Information': string,
 //     '2. Symbol': string,

@@ -13,6 +13,7 @@ https://api.tradingeconomics.com/markets/search/bezq?c=guest:guest
 https://api.tradingeconomics.com/markets/historical/bezq:it?c=guest:guest&d1=2018-08-05
 
 https://eodhistoricaldata.com/api/eod/googl.us?&api_token=5bb5d1e3026af4.09780977&period=d&fmt=json
+https://eodhistoricaldata.com/api/eod/AAPL.US?api_token=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX&period=d&fmt=json
 
 https://api.iextrading.com/1.0/stock/aapl/batch?types=quote,news,chart&range=1m&last=10
 **************************************
