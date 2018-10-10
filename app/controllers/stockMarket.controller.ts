@@ -1,10 +1,10 @@
 import * as csvtojson from 'csvtojson';
 import { TA_row } from '../types';
-import { StockMarket } from '../classes/StockMarket';
+import { Market } from '../classes/StockMarket';
 import { fetchData } from '../services/stockService';
 import { TaseUrl } from '../static';
 
-export const initTaMarket = async (): Promise<StockMarket> => {
+export const initTaMarket = async (): Promise<Market> => {
     const jsonData = async (csvContent: string): Promise<TA_row[]> => {
         // Async / await usage
         // const jsonArray = await csv().fromFile(csvFilePath);
@@ -21,7 +21,7 @@ export const initTaMarket = async (): Promise<StockMarket> => {
     };
 
 
-    const stockMarket = new StockMarket();
+    const stockMarket = new Market();
     stockMarket.name = 'TA';
     stockMarket.country = 'israel';
 

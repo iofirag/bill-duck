@@ -19,7 +19,6 @@ const app: express.Application = express();
 
 
 
-
 const initAllMarkets = async () => {
     const stockMarketList: Market[] = [];
     const stockMarketList2: MarketSchema[] = []

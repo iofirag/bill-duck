@@ -46,5 +46,3 @@ export class MongoConfig {
         throw new Error('Database not connected please try again');
     }
 }
-
-export var StockSchema: Schema = new Schema();
