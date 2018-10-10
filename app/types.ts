@@ -7,6 +7,16 @@ export type Res_eodhistoricaldata = {
     adjusted_close: string, // "0.4164",
     volume: string, // "117258517.00"
 };
+export interface TA_row {
+    name: string, 
+    symbol: string, 
+    ISIN: string, 
+    index: string, 
+    lastPrice: string, 
+    changePrecent: string, 
+    volume: string, 
+    lastTrade: string
+}
 export type Res_alphavantage = {
     'Meta Data'?: any,
     'Time Series (Daily)'?: { [date: string]: any } //'2018-01-31': TimeSeriesDaily

@@ -1,158 +1,33 @@
 import * as express from 'express';
-import fetch from 'node-fetch';
-// import {WelcomeController} from './controllers';
-import { setTimeout } from 'timers';
-import { Stock } from './classes/Stock';
-import { ApiKeyList, TICKERS_SP500, ApiFunction, TaseUrl } from './static';
-import { Res_alphavantage } from './types';
 import { MongoConfig } from './config/mongo.config';
-import { Quote } from './classes/Quote';
+import {initTaMarket} from './controllers/stockMarket.controller'
+import { Market, MarketSchema } from './classes/StockMarket';
+
+// import { setTimeout } from 'timers';
+// import { Stock } from './classes/Stock';
+// import { ApiKeyList, TICKERS_SP500, ApiFunction, TaseUrl } from './static';
+// import { Res_alphavantage, Res_eodhistoricaldata, TA_row } from './types';
+// import { Quote } from './classes/Quote';
+// import * as fs from 'fs';
+// import {WelcomeController} from './controllers';
+// const https = require("https");
+
+new MongoConfig(false);
 
 const app: express.Application = express();
 // app.use('/welcome', WelcomeController);
 
 
-// const https = require("https");
-// const apikey: string = ApiKey[0];
 
-// Config the mongoDB (local or online)
-new MongoConfig(false);
 
-const fetchStock = async (_url: string): Promise<Res_alphavantage> => {
-    let res = await fetch(_url);
-    const json: Res_alphavantage = await res.json();
-    return json;
+const initAllMarkets = async () => {
+    const stockMarketList: Market[] = [];
+    const stockMarketList2: MarketSchema[] = []
+    stockMarketList.push( await initTaMarket() );
+
+    // stock
 }
-const buildFetchUrl = (apikey: string, apiFunction: string, stockSymbol: string) => {
-    return `https://www.alphavantage.co/query?apikey=${apikey}&function=${apiFunction}&outputsize=full&symbol=${stockSymbol}`
-}
-
-const stockList: string[] = TICKERS_SP500.split(',');
-const successTickers: string[] = [];
-let errTimes = 0;
-let apiKey: string = '';
-
-const getNextApiKey = (lastKey?: string) => {
-    if (!lastKey) { 
-        return ApiKeyList[0];
-    }
-    const i = ApiKeyList.indexOf(lastKey);
-    if (i >= 0 && i < ApiKeyList.length - 1)
-    return ApiKeyList[i + 1]
-    else return ApiKeyList[0]
-}
-const tryFetchData = () => {
-    if (stockList.length) {
-        const tickerSymbol: string = stockList[stockList.length-1];
-        apiKey = getNextApiKey(apiKey);
-        const url = buildFetchUrl(apiKey, ApiFunction, tickerSymbol);
-        console.log(`apiKey=${apiKey}`)
-        console.log(`-------------------------`)
-        console.log(`Try fetch ${tickerSymbol} (${stockList.indexOf(tickerSymbol) + 1 })`);
-        fetchStock(url)
-            .then((stock_al: Res_alphavantage) => {
-
-            // console.log(Object.keys(com))
-            let isSuccess: boolean = false;
-            if (stock_al.hasOwnProperty('Information')) {
-                // Fail
-                isSuccess = false;
-                console.log(`Fail - ${tickerSymbol} - TIME_OUT :/`);
-                
-            } else if (stock_al.hasOwnProperty('Time Series (Daily)')) {
-                // Success
-                isSuccess = true;
-                errTimes = 0;
-
-                const stock: Stock = new Stock(stock_al, 'alpha');
-                // createStockStatics(stock);
-                console.log(stock);
-
-                // Remove last element
-                successTickers.push(stockList[stockList.length - 1]);
-                stockList.splice(stockList.length - 1, 1);
-                
-            } else {
-                isSuccess = false;
-                errTimes++;
-                console.log(`Fail(${errTimes}) - ${tickerSymbol} - Cant found "Time Series (Daily)" field`);
-                if (errTimes >= 5) {
-                    console.log(`Fail`)
-                    stockList.splice(stockList.length - 1, 1);
-                    errTimes = 0;
-                }
-            }
-            
-            if (isSuccess) {
-                // Try fetch next stock symbol
-                errTimes = 0;
-                tryFetchData();
-            } else {
-                console.log('timeout 30 secons')
-                setTimeout(tryFetchData, 30000);
-            }
-        }).catch((ex) => {
-            console.log(`Exception2 - ${tickerSymbol} - ${ex}`);
-            tryFetchData();
-        });
-
-    } else {
-        // End process
-        console.timeEnd('quote-fetching');
-        console.log(`success tickers = ${successTickers.length +1}`)
-        console.log(successTickers);
-    }
-}
-console.time('quote-fetching');
-// tryFetchData()
-
-
-
-import * as fs from 'fs';
-import * as csvtojson from 'csvtojson';
-
-var wstream = fs.createWriteStream('tase.csv');
-fetch(TaseUrl, {
-    method: 'GET',
-})  .then(res => res.text())
-    .then(body => {
-        wstream.write(body);
-        wstream.end()
-        jsonData(body);
-    });
-
-const jsonData = async (csvStr: string) => {
-    // TBD
-    /** csv file
-        a,b,c
-        1,2,3
-        4,5,6
-        */
-    // const csvFilePath = '<path to csv file>'
-    // csvtojson()
-    //     .fromString(csvStr)
-    //     // .fromFile(csvFilePath)
-    //     .then((jsonObj) => {
-    //         console.log(jsonObj);
-    //         /**
-    //          * [
-    //          * 	{a:"1", b:"2", c:"3"},
-    //          * 	{a:"4", b:"5". c:"6"}
-    //          * ]
-    //          */
-    //     })
-
-    // Async / await usage
-    // const jsonArray = await csv().fromFile(csvFilePath);
-    const jsonArray = await csvtojson({
-        noheader: false,
-        headers: ['name','symbol','ISIN','index','lastPrice','changePrecent','volume','lastTrade']
-    }).fromString(csvStr);
-    jsonArray.shift()   // Remove name: 'As of  07/10/2018 10:01'
-    jsonArray.shift()   // Remove headers
-    console.log(jsonArray)
-}
-
+initAllMarkets();
 
 
 
