@@ -2,25 +2,33 @@
   "scripts": {
     "build": "tsc",
     "build-watch": "npm run build -- --watch",
-    "debug": "npm run build & node --inspect-brk build/server",
-    "start": "npm run build & node build/server"
+    "debug2": "npm run build & node --inspect-brk build/server",
+    "start2": "npm run build & node build/server",
+    
+    "dev": "nodemon --watch src/**/* -e ts,json --exec ts-node ./src/server.ts",
+    "debug": "nodemon --watch src/**/* -e ts,json --exec node --inspect -r ts-node/register ./src/server.ts",
+    
+    "debug3": "nodemon -- --inspect"
   },
   "dependencies": {
     "csvtojson": "^2.0.8",
     "express": "^4.16.3",
     "lodash": "^4.17.10",
     "mongodb": "^3.1.6",
-    "mongoose": "^5.2.17",
+    "mongoose": "^5.3.3",
     "node-fetch": "^2.2.0"
   },
   "devDependencies": {
-    "typescript": "^2.9.2",
     "@types/csvtojson": "^1.1.5",
     "@types/es6-shim": "^0.31.37",
     "@types/express": "^4.16.0",
     "@types/lodash": "^4.14.116",
     "@types/mongodb": "^3.1.9",
     "@types/mongoose": "^5.2.17",
-    "@types/node-fetch": "^2.1.2"
+    "@types/node-fetch": "^2.1.2",
+    "nodemon": "^1.18.4",
+    "ts-node": "^7.0.1",
+    "typegoose": "^5.4.1",
+    "typescript": "^2.9.2"
   }
 }
