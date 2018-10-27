@@ -1,5 +1,6 @@
-export const saveMarketByCondition = async (model: any, condJson: any, market_ta: any, op: any): Promise<any> => {
-    await model.findOneAndUpdate(condJson, market_ta, { upsert: true, new: true },
+export const saveMarketByCondition = async (model: any, condJson: any, market_ta: any): Promise<any> => {
+    const op = { upsert: true, new: true };
+    await model.findOneAndUpdate(condJson, market_ta, op,
         (err: any, res: any) => {
             if (err) {
                 console.error(err)

@@ -12,7 +12,7 @@
 //     res.send(`Hello, ${name}!`);
 // });
 
-// // export const WelcomeController: Router = router;
+// export const WelcomeController: Router = router;
 
 // export const getAllWelcomes = (req: any, res: any) => {
 //     console.log('getAllUsers() executed')

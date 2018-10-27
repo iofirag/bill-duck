@@ -2,6 +2,12 @@
     "dev": "nodemon --watch src/**/* -e ts,json --exec ts-node ./src/server.ts",
     "debug": "nodemon --inspect --watch src/**/* -e ts,json --exec ts-node ./src/server.ts"
 
+    // "build": "tsc",
+    // "build-watch": "npm run build -- --watch",
+    // "debug2": "npm run build & node --inspect-brk build/server",
+    // "start2": "npm run build & node build/server",
+    // "debug3": "nodemon -- --inspect",
+
 
 
 

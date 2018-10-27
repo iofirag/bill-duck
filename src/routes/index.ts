@@ -1,15 +1,16 @@
 
-// export * as WelcomeRoutes from './welcome.route';
+import * as express from 'express';
+import { userRoutes } from './user.route';
+import { marketRoutes } from './market.route';
+import { stockRoutes } from './stock.route';
 
-
-
-module.exports = (app: any) => {
-    // app.use('/user', require('./user.routes'));
-    // app.use('/market', require('./market.route'))
-    // app.use('/welcome', require('./welcome.route'))
-    // set the home page route
-    app.get('/', (req: any, res: any) => {
-        // ejs render automatically looks in the views folder
-        res.render('index');
-    });
-}
+export default express.Router()
+    .use('/user', userRoutes)
+    .use('/market', marketRoutes)
+    .use('/stock', stockRoutes)
+    // app.use('/log', require('../routes/log'));
+    // app.use('/transaction', require('../routes/transaction'));
+    // app.use('/statistics', require('../routes/statistics'));
+    .use('/', (req, res) => {
+        res.status(200).send({ hello: 'test' });
+    })

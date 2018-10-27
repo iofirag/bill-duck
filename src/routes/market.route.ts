@@ -1,9 +1,6 @@
-// var express = require('express');
-// var router = express.Router();
-// var MarketC = require('../controllers/market.controller');
+import * as express from 'express';
+import { initAllMarkets } from '../controllers/market.controller';
 
+export const marketRoutes: express.Router = express.Router();
 
-// GET
-// console.log('dd')
-
-// router.get('/getAllMarkets', MarketC.testFunc);
+marketRoutes.get('/initAllMarkets', initAllMarkets);
