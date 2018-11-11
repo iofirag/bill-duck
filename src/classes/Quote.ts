@@ -1,6 +1,6 @@
 // import _ from 'lodash';
 import { Identifier } from '../types';
-import { Stock } from './Stock';
+import { Stock } from './stock.model';
 
 
 export class Quote {

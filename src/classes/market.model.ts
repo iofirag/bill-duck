@@ -40,10 +40,10 @@ const marketSchema = new mongoose.Schema({
     country: { type: String, lowercase: true },
     sectorList: [String],
     stockList: [{
-        identifier: {
+        // identifier: {
             // number: Number,
             symbol: { type: String, lowercase: true, unique: true },
-        },
+        // },
         _id: false
     }],
     lastUpdate: { type: Date, default: Date.now },
