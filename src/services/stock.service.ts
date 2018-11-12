@@ -1,32 +1,21 @@
 import fetch from 'node-fetch';
+import { StockM } from '../classes/stock.model';
+// import { StockM } from '../classes/stock.model';
+// import * as mongoose from 'mongoose';
+// const StockM = mongoose.model('StockM');
 
 export const fetchData = async (url: string, options: any): Promise<any> => {
     return await fetch(url, options);
 };
 
-// const createStockStatics = (stock: Stock) => {
-//     console.log(stock);
-//     let total = 0;
-//     stock.quoteList.forEach(quote => {
-//         total += quote.close;
-//     })
-//     const avg = total / stock.quoteList.length;
-//     stock.statics.movingAvg.push({ date: Date.now(), value: avg});
-// }
-
-
-// const tryFetchData2 = () => {
-//     stockList.forEach(tickerSymbol => {
-//         const url = buildFetchUrl(apiKey, ApiFunction, tickerSymbol);
-//         console.log(`-------------------------`)
-//         console.log(`Try fetch ${tickerSymbol} (${stockList.indexOf(tickerSymbol) + 1})`);
-//         fetchStock(url)
-//             .then((stock_al: Res_alphavantage) => {
-//                 console.log(stock_al);
-//             }).catch((ex) => {
-//                 console.log(`Exception2 - ${tickerSymbol} - ${ex}`);
-//                 tryFetchData();
-//             });
-//     })
-// }
-// tryFetchData2()
+export const upsertStocks = async (marketCountry: string, stockDetailsList: { name: string, symbol: string }[]): Promise<any> => {
+    // const stockToUpsert: { name: string, symbol: string }[] = []
+    const op = { upsert: true/* , new: true  */};
+    await stockDetailsList.forEach(async (s) =>  {
+        let saveItem = Object.assign(s, { country: marketCountry});
+        StockM.findOneAndUpdate({ symbol: saveItem.symbol }, saveItem, (err: any, data: any) => {
+            if (err) return console.log(err);
+            // saved!
+        })
+    });
+}

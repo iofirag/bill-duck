@@ -1,7 +1,7 @@
 import * as express from 'express';
 import { TA_row } from "../types";
 import * as csvtojson from 'csvtojson';
-import { fetchData } from "../services/stock.service";
+import { fetchData, upsertStocks } from "../services/stock.service";
 import { TaseUrl } from "../static";
 import { MarketM } from "../classes";
 import { saveMarketByCondition } from "../services/market.service";
@@ -30,11 +30,9 @@ const initTaMarket = async () => {
     const ta_res = await fetchData(TaseUrl, { method: 'GET' });
     const csvContent: string = await ta_res.text();
     const stockTaRowList: TA_row[] = await jsonData(csvContent);
-    const stockAnyList: any[] = stockTaRowList.map((s: any) => {
+    const stockAnyList: { symbol: string }[] = stockTaRowList.map((s: any) => {
         return {
-            // identifier: {
-                symbol: s.symbol
-            // }
+            symbol: s.symbol
         }
     });
     
@@ -45,8 +43,15 @@ const initTaMarket = async () => {
         sectorList: ['TA35', 'TA100'],
         stockList: stockAnyList
     };
-
     // Update market obj
     await saveMarketByCondition(MarketM, { name: 'ta', country: 'il' }, market);
+
+    const stockDetailsList: { name: string, symbol: string }[] = stockTaRowList.map((s: any) => {
+        return {
+            name: s.name,
+            symbol: s.symbol
+        }
+    });
+    await upsertStocks(market.country, stockDetailsList)
     return market;
 }

@@ -1,4 +1,4 @@
-import { Stock } from "../classes/stock.model";
+// import { Stock } from "../classes/stock.model";
 
 
 export const initAllStocks = async () => {
